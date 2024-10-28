@@ -22,61 +22,111 @@ import kotlinx.coroutines.launch
 
 import com.example.rickmortyapi.data.model.Result as CharacterResult
 
+//Implementando navegacion
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
+import com.example.rickmortyapi.CharacterList
+
+
+
+
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        enableEdgeToEdge()
+//
+//        val service = RetrofitServiceFactory.makeRetrofitService()
+//
+//        lifecycleScope.launch{
+//
+//            val characters = service.listCharacters()
+//            println(characters)
+////            movies.results.forEach { character ->
+////                println(character.name)
+////            }
+//        }
+//
+//
+////        setContent {
+////            RickMortyApiTheme {
+////                // Cambiamos a CharacterResult
+////                val characters by produceState(initialValue = emptyList<CharacterResult>()) {
+////                    // Usamos con el `await` dentro de la coroutine
+////                    value = service.listCharacters().results
+////                }
+////
+////                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+////                    CharacterList(
+////                        characters = characters,
+////                        modifier = Modifier.padding(innerPadding)
+////                    )
+////                }
+////            }
+////        }
+//
+//        setContent {
+//            val navController = rememberNavController()
+//
+//            RickMortyApiTheme {
+//                NavHost(navController = navController, startDestination = "character_list") {
+//                    composable("character_list") {
+//                        CharacterList(navController)
+////                        CharacterList(characters = characters, navController = navController)
+//
+//                    }
+//                    composable("character_detail/{characterId}") { backStackEntry ->
+//                        val characterId = backStackEntry.arguments?.getString("characterId")?.toInt()
+//                        val character = characters.first { it.id == characterId }
+//                        CharacterDetailScreen(character = character) {
+//                            navController.popBackStack() // Volver a la lista
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//    }
+//}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val service = RetrofitServiceFactory.makeRetrofitService()
-
-        lifecycleScope.launch{
-
-            val characters = service.listCharacters()
-            println(characters)
-//            movies.results.forEach { character ->
-//                println(character.name)
-//            }
-        }
-
-
-//        setContent {
-//            RickMortyApiTheme {
-//                val characters by produceState(initialValue = emptyList<Result>()) {
-//                    value = service.listCharacters().results
-//                }
-//
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-////                    Greeting(
-////                        name = "Android",
-////                        modifier = Modifier.padding(innerPadding)
-////                    )
-//                    CharacterList(
-//                        characters = characters,
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
-//            }
-//        }
         setContent {
+            val service = RetrofitServiceFactory.makeRetrofitService()
+            val navController = rememberNavController()
+
             RickMortyApiTheme {
-                // Cambiamos a CharacterResult
+                // Usar produceState para cargar los personajes de forma asincrónica
                 val characters by produceState(initialValue = emptyList<CharacterResult>()) {
-                    // Usamos con el `await` dentro de la coroutine
+                    // Llamada a la API para obtener la lista de personajes
                     value = service.listCharacters().results
                 }
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CharacterList(
-                        characters = characters,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                // Configurar la navegación
+                NavHost(navController = navController, startDestination = "character_list") {
+                    composable("character_list") {
+                        // Pasar characters a CharacterList
+                        CharacterList(characters = characters, navController = navController)
+                    }
+                    composable("character_detail/{characterId}") { backStackEntry ->
+                        // Obtener el ID del personaje
+                        val characterId = backStackEntry.arguments?.getString("characterId")?.toInt()
+                        // Verificar que characters no esté vacío antes de acceder a él
+                        val character = characters.first { it.id == characterId }
+                        CharacterDetailScreen(character = character) {
+                            navController.popBackStack() // Volver a la lista
+                        }
+                    }
                 }
             }
         }
-
     }
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

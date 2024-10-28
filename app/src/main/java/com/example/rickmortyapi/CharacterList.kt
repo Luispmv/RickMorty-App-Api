@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 import com.example.rickmortyapi.data.model.Result as CharacterResult
 
@@ -18,10 +19,14 @@ import com.example.rickmortyapi.data.model.Result as CharacterResult
 //    }
 //}
 @Composable
-fun CharacterList(characters: List<CharacterResult>, modifier: Modifier = Modifier) {
+fun CharacterList(characters: List<CharacterResult>, navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(characters) { character ->
-            CharacterItem(character = character)
+//            CharacterItem(character = character)
+            CharacterItem(character = character) {
+                // Aquí defines la acción al hacer clic
+                navController.navigate("character_detail/${character.id}")
+            }
         }
     }
 }
