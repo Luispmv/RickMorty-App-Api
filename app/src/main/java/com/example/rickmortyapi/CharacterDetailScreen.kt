@@ -33,7 +33,7 @@ import androidx.compose.ui.res.painterResource
 
 @Composable
 fun CharacterDetailScreen(character: CharacterResult, onBackClick: () -> Unit) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(100.dp)) {
         // Encabezado personalizado
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -65,8 +65,10 @@ fun CharacterDetailScreen(character: CharacterResult, onBackClick: () -> Unit) {
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Status: ${character.status}")
-        Text(text = "Species: ${character.species}")
+        Text(text = "Estado: ${character.status}")
+        Text(text = "Espacie: ${character.species}")
+        Text(text = "Genero: ${character.gender}")
+        Text(text = "Ubicacion: ${character.location.name}")
         // Puedes agregar más detalles aquí
     }
 }
