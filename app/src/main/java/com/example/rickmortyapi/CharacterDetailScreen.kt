@@ -24,35 +24,34 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.R
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import com.example.rickmortyapi.data.model.Result as CharacterResult
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+
 
 @Composable
 fun CharacterDetailScreen(character: CharacterResult, onBackClick: () -> Unit) {
-    Column(modifier = Modifier.padding(100.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth() // Asegura que el Column ocupe el ancho completo
+            .padding(horizontal = 0.dp) // Agrega padding horizontal si deseas un margen en los lados
+    ) {
         // Encabezado personalizado
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onBackClick) {
-//                Icon(Icons.Default.ArrowBack)
-                Image(
-                    painter = painterResource(id = com.example.rickmortyapi.R.drawable.back), // Cambia 'back' al nombre de tu archivo sin extensión
-                    contentDescription = "Back",
-                    modifier = Modifier
-                        .size(24.dp) // Ajusta el tamaño según lo necesites
-                        .clickable(onClick = onBackClick) // Añade la funcionalidad de clic
-                )
-            }
-
-
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = character.name)
+            Spacer(modifier = Modifier.width(0.dp))
         }
 
         // Contenido principal
@@ -60,16 +59,30 @@ fun CharacterDetailScreen(character: CharacterResult, onBackClick: () -> Unit) {
             painter = rememberImagePainter(character.image),
             contentDescription = character.name,
             modifier = Modifier
-                .size(128.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop // La imagen se recorta para llenar el contenedor
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Estado: ${character.status}")
-        Text(text = "Espacie: ${character.species}")
-        Text(text = "Genero: ${character.gender}")
-        Text(text = "Ubicacion: ${character.location.name}")
-        // Puedes agregar más detalles aquí
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        // Texto de detalles
+        Column(modifier = Modifier.padding(10.dp)) {
+            Text(text = character.name, fontSize = 40.sp)
+            Text(text = "Estado: ${character.status}")
+            Text(text = "Especie: ${character.species}")
+            Text(text = "Género: ${character.gender}")
+            Text(text = "Ubicación: ${character.location.name}")
+        }
+
+        Button(shape = RectangleShape,onClick = onBackClick, modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .width(200.dp).padding(top = 50.dp)
+            .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0XFF97CE4C), // Color de fondo del botón
+                contentColor = Color.White // Color del texto
+            )) {
+            Text(text = "Regresar a inicio")
+        }
     }
 }
-

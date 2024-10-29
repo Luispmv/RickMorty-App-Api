@@ -13,7 +13,7 @@ import com.example.rickmortyapi.data.model.Result as CharacterResult
 
 @Composable
 fun CharacterList(characters: List<CharacterResult>, navController: NavController, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier.padding(top = 100.dp)) {
+    LazyColumn(modifier = modifier.padding(top = 50.dp)) {
         items(characters) { character ->
 //            CharacterItem(character = character)
             CharacterItem(character = character) {

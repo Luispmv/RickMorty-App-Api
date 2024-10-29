@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.rickmortyapi.data.model.Result as CharacterResult
 
@@ -35,13 +36,12 @@ fun CharacterItem(character: CharacterResult, onClick: () -> Unit) {
             painter = rememberImagePainter(character.image),
             contentDescription = character.name,
             modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape),
+                .size(120.dp),
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column {
-            Text(text = character.name)
+            Text(text = character.name,fontSize = 25.sp)
             Text(text = character.status)
             Text(text = character.species)
         }
