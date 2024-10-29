@@ -30,66 +30,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.rickmortyapi.CharacterList
 
 
-
-
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//
-//        val service = RetrofitServiceFactory.makeRetrofitService()
-//
-//        lifecycleScope.launch{
-//
-//            val characters = service.listCharacters()
-//            println(characters)
-////            movies.results.forEach { character ->
-////                println(character.name)
-////            }
-//        }
-//
-//
-////        setContent {
-////            RickMortyApiTheme {
-////                // Cambiamos a CharacterResult
-////                val characters by produceState(initialValue = emptyList<CharacterResult>()) {
-////                    // Usamos con el `await` dentro de la coroutine
-////                    value = service.listCharacters().results
-////                }
-////
-////                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-////                    CharacterList(
-////                        characters = characters,
-////                        modifier = Modifier.padding(innerPadding)
-////                    )
-////                }
-////            }
-////        }
-//
-//        setContent {
-//            val navController = rememberNavController()
-//
-//            RickMortyApiTheme {
-//                NavHost(navController = navController, startDestination = "character_list") {
-//                    composable("character_list") {
-//                        CharacterList(navController)
-////                        CharacterList(characters = characters, navController = navController)
-//
-//                    }
-//                    composable("character_detail/{characterId}") { backStackEntry ->
-//                        val characterId = backStackEntry.arguments?.getString("characterId")?.toInt()
-//                        val character = characters.first { it.id == characterId }
-//                        CharacterDetailScreen(character = character) {
-//                            navController.popBackStack() // Volver a la lista
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//
-//    }
-//}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
